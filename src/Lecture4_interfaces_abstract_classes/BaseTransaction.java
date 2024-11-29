@@ -49,3 +49,10 @@ public abstract class BaseTransaction implements TransactionInterface {
     public abstract void printTransactionDetails();
     public abstract void apply(BankAccount ba);
 }
+
+
+public class BaseTransaction implements TransactionInterface{
+  private final int amount;
+  private final Calendar date;
+  private final string transactionID;
+}
