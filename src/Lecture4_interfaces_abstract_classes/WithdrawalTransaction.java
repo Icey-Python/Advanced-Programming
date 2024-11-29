@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
 
 public class WithdrawalTransaction extends BaseTransaction {
+    private double originalBalance;  // Field to store the original balance before the transaction
     public WithdrawalTransaction(int amount, @NotNull Calendar date) {
         super(amount, date);
     }
@@ -32,6 +33,7 @@ public class WithdrawalTransaction extends BaseTransaction {
      */
     @Override
     public void apply(BankAccount ba) {
+         originalBalance = ba.getBalance(); // assign the current balance to original balance for tracking of transactions
         if (ba.getBalance() >= getAmount()) {
             double newBalance = ba.getBalance() - getAmount();
             ba.setBalance(newBalance);
@@ -43,5 +45,14 @@ public class WithdrawalTransaction extends BaseTransaction {
     /*
     Assignment 1 Q3: Write the Reverse method - a method unique to the WithdrawalTransaction Class
      */
+    public boolean reverse(BankAccount ba) {
+        if (ba.getBalance() == originalBalance) {
+            System.out.println("Transaction already reversed or not applied.");
+            return false;  // Fail case if transaction has already been reversed or was never applied
+        }
+        ba.setBalance(originalBalance);  // Restore the original balance
+        System.out.println("WithdrawalTransaction reversed: Balance restored to " + originalBalance);
+        return true;
+    }
 }
 
