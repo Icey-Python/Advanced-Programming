@@ -8,27 +8,28 @@ public class BaseTransaction implements TransactionInterface{
   private final int amount;
   private final Calendar date;
   private final String transactionID;
-
-  //Constructor
-  public BaseTransaction(int amount, @NotNull Calendar date){
-    this.amount = amount;
-    this.date = (Calendar) date.clone();
-    this.uniq = (int) Math.random()*10000;
+  private int uniq;
+  
+    //Constructor
+    public BaseTransaction(int amount, @NotNull Calendar date){
+      this.amount = amount;
+      this.date = (Calendar) date.clone();
+      this.uniq = (int) Math.random()*10000;
     transactionID = date.toString()+uniq;
   }
 
   //TransactionInterface contracts
-  @override
+  @Override
   public double getAmount(){
     return amount;
   }
 
-  @override
+  @Override
   public Calendar getDate(){
     return (Calendar) date.clone();
   } 
   
-  @override
+  @Override
   public String getTransactionID(){
     return transactionID;
   }
@@ -41,7 +42,7 @@ public class BaseTransaction implements TransactionInterface{
         System.out.println("Date: " + getDate().getTime());
     }
 
-  public void apply(BankAccount ba) {
-    System.out.println("Cannot apply a generic transaction")
+  public void apply(BankAccount ba) throws InsufficientFundsException {
+    System.out.println("Cannot apply a generic transaction");
     }
 }
