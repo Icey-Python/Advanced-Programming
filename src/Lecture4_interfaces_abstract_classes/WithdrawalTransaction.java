@@ -30,14 +30,16 @@ public class WithdrawalTransaction extends BaseTransaction {
     /*
     Oportunity for assignment: implementing different form of withdrawal
      */
+    @Override
     public void apply(BankAccount ba) {
-        double curr_balance = ba.getBalance();
-        if (curr_balance > getAmount()) {
-            double new_balance = curr_balance - getAmount();
-            ba.setBalance(new_balance);
+        if (ba.getBalance() >= getAmount()) {
+            double newBalance = ba.getBalance() - getAmount();
+            ba.setBalance(newBalance);
+            System.out.println("WithdrawalTransaction applied: Balance updated to " + newBalance);
+        } else {
+            System.out.println("Insufficient balance for withdrawal.");
         }
     }
-
     /*
     Assignment 1 Q3: Write the Reverse method - a method unique to the WithdrawalTransaction Class
      */
