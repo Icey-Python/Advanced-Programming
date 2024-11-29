@@ -54,5 +54,37 @@ public abstract class BaseTransaction implements TransactionInterface {
 public class BaseTransaction implements TransactionInterface{
   private final int amount;
   private final Calendar date;
-  private final string transactionID;
+  private final String transactionID;
+
+  //Constructor
+  public BaseTransaction(int amount, @NotNull Calendar date){
+    this.amount = amount;
+    this.date = (Calendar) date.clone();
+    this.uniq = (int) Math.random()*10000;
+    transactionID = date.toString()+uniq;
+  }
+
+  public double getAmount(){
+    return amount;
+  }
+
+  public Calendar getDate(){
+    return (Calendar) date.clone();
+  } 
+
+  public String getTransactionID(){
+    return transactionID;
+  }
+  
+  public void printTransactionDetails() {
+        System.out.println("Transaction Details:");
+        System.out.println("Transaction ID: " + getTransactionID());
+        System.out.println("Amount: " + getAmount());
+        System.out.println("Date: " + getDate().getTime());
+    }
+
+  public void apply(BankAccount ba) {
+        // Assuming BankAccount has a method `applyTransaction`:
+        ba.applyTransaction(this);
+    }
 }
